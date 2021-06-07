@@ -1,0 +1,436 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">Investigation</h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="fas fa-exclamation-circle text-dark"></i>
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)" class="text-dark"
+                  >Incident Management</a
+                >
+              </li>
+              <li aria-current="page" class="breadcrumb-item active">
+                Investigation
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="h3 mb-0">Category</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <div class="amchart" id="chartdivincidentinvestigation1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="h3 mb-0">Type of Incident</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <div class="amchart" id="chartdivincidentinvestigation2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="h3 mb-0">States</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <div class="amchart" id="chartdivincidentinvestigation3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="h3 mb-0">Division</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="chart">
+            <div class="amchart" id="chartdivincidentinvestigation4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col-7">
+              <h5 class="h3 m-0">Search Tools</h5>
+            </div>
+            <!-- <div class="col-5 text-right">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="openModal(addNew)"
+              >
+                Add New
+              </button>
+            </div> -->
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label>Category</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Category 1</option>
+                  <option value="2">Category 2</option>
+                  <option value="3">Category 3</option>
+                  <option value="4">Category 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label>Type of Incidents</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                  <option value="4">Type 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label">Incident's ID</label>
+                <input class="form-control" type="number" placeholder="0000" />
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label">States</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Type here..."
+                />
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label"
+                  >Lobs/Division/Subsidiary</label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Type here..."
+                />
+              </div>
+            </div>
+            <div class="col-md-12 text-right align-items-center">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="successSwal('searched')"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <h3 class="m-0">List of Records</h3>
+        </div>
+        <div class="card-body">
+          <div class="dataTables_wrapper py-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="datatable_length">
+                  <label>
+                    Show
+                    <select
+                      name="datatable_length"
+                      aria-controls="datatable"
+                      class="form-control form-control-sm"
+                      (change)="entriesChange($event)"
+                    >
+                      <option value="3" [selected]="entries == 3">3</option>
+                      <option value="6" [selected]="entries == 6">6</option>
+                      <option value="9" [selected]="entries == 9">9</option>
+                      <option value="-1" [selected]="entries == -1">All</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div id="datatable_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="Search records"
+                      aria-controls="datatable"
+                      (keyup)="filterTable($event)"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ngx-datatable
+              class="bootstrap selection-cell"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="entries != -1 ? entries : undefined"
+              [rows]="temp"
+            >
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Incident's ID </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.project }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Perkeso's ID </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.perkeso }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Date Complete Investigation </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.date }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Incident Root Cause </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.type }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Action </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button
+                    class="btn btn-icon btn-default btn-sm"
+                    type="button"
+                    title="Edit"
+                    (click)="openModal(viewData)"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-edit"> </i>
+                    </span>
+                  </button>
+                  <!-- <button
+                        class="btn btn-icon btn-default btn-sm"
+                        type="button"
+                        title="View"
+                        (click)="openModal(addNew)"
+                      >
+                        <span class="btn-inner--icon">
+                          <i class="far fa-eye"> </i>
+                        </span>
+                      </button> -->
+                  <!-- <button
+                      class="btn btn-icon btn-success btn-sm"
+                      type="button"
+                      title="Claim"
+                      (click)="successSwal('claimed')"
+                    >
+                      <span class="btn-inner--icon">
+                        <i class="fas fa-hand-holding-usd"> </i>
+                      </span>
+                    </button> -->
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #viewData>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title text-white" id="modal-title-default">Add New</h6>
+
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      <span class="text-white" aria-hidden="true"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="chart">
+          <div class="amchart" id="chartdivincidentinvestigation5"></div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Perkeso Report Number</label>
+          <input class="form-control" type="text" value="IE523" disabled />
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Date of Investigation</label>
+          <input class="form-control" type="text" value="5/10/2019" disabled />
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Date Complete Investigation</label>
+          <input class="form-control" type="text" value="6/1/2020" disabled />
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Incident Root Cause</label>
+          <input
+            class="form-control"
+            type="text"
+            value="Fire Incident"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Incident Impacts</label>
+          <input
+            class="form-control"
+            type="text"
+            value="Broken Assets"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="form-control-label">Immediate Action Taken</label>
+          <input
+            class="form-control"
+            type="text"
+            value="Calculate total loss and recovery with new assets"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="col-xl-12">
+        <div class="form-group">
+          <label class="form-control-label">Related Documents</label>
+          <div class="custom-file">
+            <input
+              class="custom-file-input"
+              id="customFileLang"
+              lang="en"
+              type="file"
+            />
+
+            <label class="custom-file-label" for="customFileLang">
+              Select file
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      class="btn btn-default text-white"
+      type="button"
+      class="btn btn-success"
+      (click)="successSwallStepper()"
+    >
+      Save
+    </button>
+    <button
+      class="btn btn-outline-danger ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

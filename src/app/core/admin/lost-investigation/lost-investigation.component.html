@@ -1,0 +1,335 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">Investigation</h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="fas fa-car-crash text-dark"></i>
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)" class="text-dark">Lost Control</a>
+              </li>
+              <li aria-current="page" class="breadcrumb-item active">
+                Investigation
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col-7">
+              <h5 class="h3 m-0">Search Tools</h5>
+            </div>
+            <div class="col-5 text-right">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="openModal(addNew)"
+              >
+                Add New
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="form-group">
+                <label class="form-control-label">Incident's ID</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Enter document's ID..."
+                />
+              </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="successSwal('searched')"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <h3 class="m-0">List of Investigations</h3>
+        </div>
+        <div class="card-body">
+          <div class="dataTables_wrapper py-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="datatable_length">
+                  <label>
+                    Show
+                    <select
+                      name="datatable_length"
+                      aria-controls="datatable"
+                      class="form-control form-control-sm"
+                      (change)="entriesChange($event)"
+                    >
+                      <option value="3" [selected]="entries == 3">3</option>
+                      <option value="6" [selected]="entries == 6">6</option>
+                      <option value="9" [selected]="entries == 9">9</option>
+                      <option value="-1" [selected]="entries == -1">All</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div id="datatable_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="Search records"
+                      aria-controls="datatable"
+                      (keyup)="filterTable($event)"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ngx-datatable
+              class="bootstrap selection-cell"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="entries != -1 ? entries : undefined"
+              [rows]="temp"
+            >
+              <ngx-datatable-column name="Incident's ID">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.project }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Type of Incident">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.type }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Financial Lost (%)">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.rating }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Action </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- <button
+                    class="btn btn-icon btn-success btn-sm"
+                    type="button"
+                    title="Update"
+                    (click)="openModal(addNew)"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-edit"> </i>
+                    </span>
+                  </button> -->
+                  <button
+                    class="btn btn-icon btn-default btn-sm"
+                    type="button"
+                    title="View"
+                    (click)="openModal(addNew)"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="far fa-eye"> </i>
+                    </span>
+                  </button>
+                  <!-- <button
+                    class="btn btn-icon btn-danger btn-sm"
+                    type="button"
+                    title="Delete"
+                    (click)="delete()"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-trash"> </i>
+                    </span>
+                  </button> -->
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addNew>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title text-white" id="modal-title-default">Add New</h6>
+
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      <span class="text-white" aria-hidden="true"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel> General </ng-template>
+          <!-- <h5 class="h3 mb-3">Part 1</h5> -->
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label class="form-control-label"> Staff's Number </label>
+
+                <input class="form-control" placeholder="0000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label class="form-control-label"> Name </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label>Type of Incident</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Fire Incident</option>
+                  <option value="2">Flood</option>
+                  <option value="3">Public Liability</option>
+                  <option value="4">Submarine</option>
+                  <option value="5">Fidelity Guarantee</option>
+                  <option value="6">
+                    Link Incident to Relevant Risk Register
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-default" mat-button matStepperNext>
+              Submit
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel> Investigation </ng-template>
+          <!-- <h5 class="h3 mb-3">Part 2</h5> -->
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label>Type of Incident</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Fire Incident</option>
+                  <option value="2">Flood</option>
+                  <option value="3">Public Liability</option>
+                  <option value="4">Submarine</option>
+                  <option value="5">Fidelity Guarantee</option>
+                  <option value="6">
+                    Link Incident to Relevant Risk Register
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label class="form-control-label"> Number of Incidents </label>
+
+                <input class="form-control" placeholder="000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label class="form-control-label"> Financial Lost </label>
+
+                <input class="form-control" placeholder="000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
+                <label class="form-control-label"> Action Taken </label>
+
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Low</option>
+                  <option value="2">Mid</option>
+                  <option value="3">Critical</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-danger" mat-button matStepperPrevious>
+              Back
+            </button>
+            <button
+              class="btn btn-default"
+              mat-button
+              (click)="successSwallStepper()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        <!-- <p>You are now done.</p> -->
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+
+  <div class="modal-footer">
+    <!-- <button
+          class="btn btn-default text-white"
+          type="button"
+          class="btn btn-success"
+          (click)="successSwallStepper()"
+        >
+          Save
+        </button> -->
+    <button
+      class="btn btn-outline-danger ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

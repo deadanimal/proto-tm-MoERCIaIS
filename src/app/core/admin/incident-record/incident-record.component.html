@@ -1,0 +1,712 @@
+<div class="header pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-dark d-inline-block mb-0">Records</h6>
+
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">
+                  <i class="fas fa-exclamation-circle text-dark"></i>
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)" class="text-dark"
+                  >Incident Management</a
+                >
+              </li>
+              <li aria-current="page" class="breadcrumb-item active">
+                Records
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <div class="row align-items-center">
+            <div class="col-7">
+              <h5 class="h3 m-0">Search Tools</h5>
+            </div>
+            <div class="col-5 text-right">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="openModal(addNew)"
+              >
+                Add New
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label>Category</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Category 1</option>
+                  <option value="2">Category 2</option>
+                  <option value="3">Category 3</option>
+                  <option value="4">Category 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label>Type of Incidents</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                  <option value="4">Type 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label class="form-control-label">Incident's ID</label>
+                <input class="form-control" type="number" placeholder="0000" />
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label">States</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Type here..."
+                />
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label class="form-control-label"
+                  >Lobs/Division/Subsidiary</label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Type here..."
+                />
+              </div>
+            </div>
+            <div class="col-md-12 text-right align-items-center">
+              <button
+                class="btn btn-default"
+                type="button"
+                (click)="successSwal('searched')"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-secondary">
+          <h3 class="m-0">List of Records</h3>
+        </div>
+        <div class="card-body">
+          <div class="dataTables_wrapper py-4">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="datatable_length">
+                  <label>
+                    Show
+                    <select
+                      name="datatable_length"
+                      aria-controls="datatable"
+                      class="form-control form-control-sm"
+                      (change)="entriesChange($event)"
+                    >
+                      <option value="3" [selected]="entries == 3">3</option>
+                      <option value="6" [selected]="entries == 6">6</option>
+                      <option value="9" [selected]="entries == 9">9</option>
+                      <option value="-1" [selected]="entries == -1">All</option>
+                    </select>
+                    entries
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div id="datatable_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                      type="search"
+                      class="form-control form-control-sm"
+                      placeholder="Search records"
+                      aria-controls="datatable"
+                      (keyup)="filterTable($event)"
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <ngx-datatable
+              class="bootstrap selection-cell"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="entries != -1 ? entries : undefined"
+              [rows]="temp"
+            >
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Incident's ID </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.project }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Type of Incident </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.type }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Date </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.date }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Time </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.time }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Victim's Name </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.name }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Status </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span
+                    *ngIf="row.status == 'open'"
+                    class="badge badge-pill badge-success"
+                    >Open</span
+                  >
+                  <span
+                    *ngIf="row.status == 'reopen'"
+                    class="badge badge-pill badge-primary"
+                    >Re-open</span
+                  >
+                  <span
+                    *ngIf="row.status == 'pending'"
+                    class="badge badge-pill badge-warning"
+                    >Pending</span
+                  >
+                  <span
+                    *ngIf="row.status == 'close'"
+                    class="badge badge-pill badge-danger"
+                    >Close</span
+                  >
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column>
+                <ng-template ngx-datatable-header-template>
+                  <span> Action </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <button
+                    class="btn btn-icon btn-default btn-sm"
+                    type="button"
+                    title="Edit"
+                    (click)="openModal(addNew)"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-edit"> </i>
+                    </span>
+                  </button>
+                  <!-- <button
+                      class="btn btn-icon btn-default btn-sm"
+                      type="button"
+                      title="View"
+                      (click)="openModal(addNew)"
+                    >
+                      <span class="btn-inner--icon">
+                        <i class="far fa-eye"> </i>
+                      </span>
+                    </button> -->
+                  <!-- <button
+                    class="btn btn-icon btn-success btn-sm"
+                    type="button"
+                    title="Claim"
+                    (click)="successSwal('claimed')"
+                  >
+                    <span class="btn-inner--icon">
+                      <i class="fas fa-hand-holding-usd"> </i>
+                    </span>
+                  </button> -->
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addNew>
+  <div class="modal-header bg-default">
+    <h6 class="modal-title text-white" id="modal-title-default">Add New</h6>
+
+    <button
+      aria-label="Close"
+      class="close"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      <span class="text-white" aria-hidden="true"> × </span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel> Incident Informations </ng-template>
+          <!-- <h5 class="h3 mb-3">Part 1</h5> -->
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Type of Incident</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                  <option value="4">Type 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Group</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Group 1</option>
+                  <option value="2">Group 2</option>
+                  <option value="3">Group 3</option>
+                  <option value="4">Group 4</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">Date</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  placeholder="2020-01-01"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">Time</label>
+                <input
+                  class="form-control"
+                  type="time"
+                  placeholder="10:30:00"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Location </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Incident Address</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> State/Subsidiaries </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Lob/BF/CF</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Lob</option>
+                  <option value="2">BF</option>
+                  <option value="3">CF</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Estimated Loss (RM) </label>
+
+                <input class="form-control" placeholder="0000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Vehicle Number </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-default" mat-button matStepperNext>
+              Submit
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel> Incident Victims </ng-template>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Name </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Staff's ID </label>
+
+                <input class="form-control" placeholder="0000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">Phone</label>
+                <input
+                  class="form-control"
+                  type="tel"
+                  placeholder="012-3456789"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">
+                  Company/Organization Name
+                </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Email </label>
+
+                <input
+                  class="form-control"
+                  type="email"
+                  placeholder="prototype@example.com"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Address</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> State </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Supervisor's Name </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="btn btn-danger" mat-button matStepperPrevious>
+              Back
+            </button>
+            <button class="btn btn-default" mat-button matStepperNext>
+              Submit
+            </button>
+          </div>
+        </form>
+        <!-- <p>You are now done.</p> -->
+      </mat-step>
+
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel> Incident Description </ng-template>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>How Incident Happened</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Who Witness the Incident</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Type of Initial Treatment</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Type 1</option>
+                  <option value="2">Type 2</option>
+                  <option value="3">Type 3</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label
+                  >Vehicle Equipment Involved with Registration Number</label
+                >
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Other Matters</label>
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"
+                  >Police Report Attachment</label
+                >
+                <div class="custom-file">
+                  <input
+                    class="custom-file-input"
+                    id="customFileLang"
+                    lang="en"
+                    type="file"
+                  />
+
+                  <label class="custom-file-label" for="customFileLang">
+                    Select file
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="btn btn-danger" mat-button matStepperPrevious>
+              Back
+            </button>
+            <button class="btn btn-default" mat-button matStepperNext>
+              Submit
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="forthFormGroup">
+        <form [formGroup]="forthFormGroup">
+          <ng-template matStepLabel> Incident Notified by </ng-template>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Name </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Staff's ID </label>
+
+                <input class="form-control" placeholder="0000" type="number" />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Email </label>
+
+                <input
+                  class="form-control"
+                  type="email"
+                  placeholder="prototype@example.com"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">Phone Number</label>
+                <input
+                  class="form-control"
+                  type="tel"
+                  placeholder="012-3456789"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label">Office Number</label>
+                <input
+                  class="form-control"
+                  type="tel"
+                  placeholder="01-2345678"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label>Lob/BF/CF</label>
+                <select class="form-control">
+                  <option hidden selected>Choose</option>
+                  <option value="1">Lob</option>
+                  <option value="2">BF</option>
+                  <option value="3">CF</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Div/Dept/Subs </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-xl-12">
+              <div class="form-group">
+                <label class="form-control-label"> Unit </label>
+
+                <input
+                  class="form-control"
+                  placeholder="Type here..."
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="btn btn-danger" mat-button matStepperPrevious>
+              Back
+            </button>
+            <button
+              class="btn btn-default"
+              mat-button
+              (click)="successSwallStepper()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        <!-- <p>You are now done.</p> -->
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+
+  <div class="modal-footer">
+    <!-- <button
+              class="btn btn-default text-white"
+              type="button"
+              class="btn btn-success"
+              (click)="successSwallStepper()"
+            >
+              Save
+            </button> -->
+    <button
+      class="btn btn-outline-danger ml-auto"
+      data-dismiss="modal"
+      type="button"
+      (click)="modalRef.hide()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
